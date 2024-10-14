@@ -1,0 +1,10 @@
+.idea
+.gradle
+build
+target
+
+*.iml
+*.ipr
+src/main/java/ru/clevertec/App.java
+
+
