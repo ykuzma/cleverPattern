@@ -36,21 +36,6 @@ public class ContainerData<T> {
             this.containerClass = containerClass;
         }
 
-
-        public static Class<?> extractGenericClass(Type type) {
-            Class<?> clazz;
-            try {
-                if (type instanceof ParameterizedType parameterizedType) {
-                    clazz = Class.forName(parameterizedType.getRawType().getTypeName());
-                } else {
-                    clazz = Class.forName(type.getTypeName());
-                }
-            } catch (ClassNotFoundException e) {
-                throw new DeserializationException(e.getMessage(), e);
-            }
-            return clazz;
-        }
-
         public ContainerBuilder<T> setContainerClass(Class<T> clazz) {
             containerClass = clazz;
             return this;
@@ -87,6 +72,22 @@ public class ContainerData<T> {
             }
 
         }
+
+
+        public static Class<?> extractGenericClass(Type type) {
+            Class<?> clazz;
+            try {
+                if (type instanceof ParameterizedType parameterizedType) {
+                    clazz = Class.forName(parameterizedType.getRawType().getTypeName());
+                } else {
+                    clazz = Class.forName(type.getTypeName());
+                }
+            } catch (ClassNotFoundException e) {
+                throw new DeserializationException(e.getMessage(), e);
+            }
+            return clazz;
+        }
     }
+
 
 }

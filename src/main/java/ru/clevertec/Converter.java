@@ -9,6 +9,7 @@ import ru.clevertec.core.service.deserialization.NodeConverter;
 import ru.clevertec.core.service.deserialization.NodeConverterFactory;
 import ru.clevertec.core.service.serialization.ConverterFactory;
 import ru.clevertec.core.service.serialization.ConverterToJson;
+import ru.clevertec.validation.Validator;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
@@ -23,6 +24,9 @@ public class Converter {
 
 
     public <T> T mappingJsonToDomain(String json, Class<T> clazz) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+        if (!Validator.of().validate(clazz)) {
+            throw new IllegalArgumentException("this class is not supported" + clazz.getName());
+        }
         ContainerData<T> containerData = new ContainerData.ContainerBuilder<>(clazz).build();
         return jsonToDomain(json, containerData);
     }
